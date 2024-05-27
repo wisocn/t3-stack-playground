@@ -1,0 +1,38 @@
+version: '3.9'
+
+services:
+
+  # POSTGRES DEFINITION
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rj64ySNszjE9v9KB
+      POSTGRES_DB: t3-stack-playground
+    ports:
+      - "5432:5432"
+    networks:
+      postgres-network:
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/db
+
+  pgadmin:
+    image: dpage/pgadmin4:6.15
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: 1
+      PGADMIN_LISTEN_PORT: 80
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "8085:80"
+    networks:
+      postgres-network:
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+networks:
+  postgres-network:
+
+volumes:
+  postgres:
+  pgadmin:
